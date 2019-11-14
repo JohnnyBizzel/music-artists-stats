@@ -32,25 +32,46 @@ def find_songs_by_artist(artist_id):
 
     if not artist_id:
         raise ValueError("Artist not found :(")
-
-    url = 'https://musicbrainz.org/ws/2/recording?query=arid:{}&fmt=json&limit=100&offset=1'.format(artist_id)
+    
+    # first find the number of songs in the database
+    url = 'https://musicbrainz.org/ws/2/recording?query=arid:{}&fmt=json&limit=1&offset=0'.format(artist_id)
     print(url)
     resp = requests.get(url)
     resp.raise_for_status()
 
-    artist_data = resp.json()
-    artists_recs = artist_data.get('recordings')
-    print(len(artists_recs))
-    # lyric_words = artists_list.split()
+    artist_data = resp.json()    
+    songs_found = artist_data.get('count')
+    print("Found {} songs in the DB".format(songs_found))
     
-    for song in artists_recs:
-        print(song["title"])
+    # Now call the service to retrieve all songs as there is a limit on the API of max 100 records
+    num_songs_left = songs_found
+    
+    # Calculate number of calls (batches of 100 records needed)
+    loops_needed = num_songs_left // 100
+    print("\nLooping {} times".format(loops_needed)) 
+    offsetting=0
+    artist_songs=[]
+    
+    while (loops_needed >= 0):
+        url = 'https://musicbrainz.org/ws/2/recording?query=arid:{}&fmt=json&limit=100&offset={}'.format(artist_id, offsetting)
+        # print(url)
+        resp = requests.get(url)
+        resp.raise_for_status()
+        artist_data = resp.json()
+        artist_songs += artist_data.get('recordings')        
+        loops_needed -= 1
+        offsetting += 100
+    
+    artist_songs_unique = []
+    for item in artist_songs:
+        print(item["title"])
+        if item["title"] not in artist_songs_unique:
+            artist_songs_unique.append(item)
 
-    # word_length = len(artists_list.split());
-    # word_count_text = "\nNumber of words = {}".format(word_length);
-    # artists.sort(key=lambda m: -m.year)  # minus sorts descending
+    # for song in artist_songs_unique:
+    #     print(song["title"])
 
-    return len(artists_recs)
+    return len(artist_songs_unique)
 
 
 def find_song(artist, search_keyword):
@@ -77,4 +98,3 @@ def find_song(artist, search_keyword):
     # artists.sort(key=lambda m: -m.year)  # minus sorts descending
 
     return word_count_text
-
