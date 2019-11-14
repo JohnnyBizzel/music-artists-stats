@@ -33,7 +33,7 @@ def find_songs_by_artist(artist_id):
     if not artist_id:
         raise ValueError("Artist not found :(")
 
-    url = 'https://musicbrainz.org/ws/2/recording?query=arid:{}&fmt=json&limit=100&offset=1'.format(artist_id)
+    url = 'https://musicbrainz.org/ws/2/recording?query=arid:{}&fmt=json&limit=100&offset=0'.format(artist_id)
     print(url)
     resp = requests.get(url)
     resp.raise_for_status()

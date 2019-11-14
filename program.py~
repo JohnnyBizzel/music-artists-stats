@@ -21,9 +21,9 @@ def search_event_loop():
         try:
             search = input('Search term (enter x to eXit):')
             if search != 'x':
-                artist_id = artists_svc.find_artist(search)
-                songs = artists_svc.find_songs_by_artist(artist_id)
-                print("Found {} songs when searching for '{}'".format(songs, search))
+                results = artists_svc.find_artist(search)
+                print(results)
+                # print("Found {} movies for search '{}'".format(len(results), search))
 		
                 #for m in results:
                 #    print("{} -- {}".format(m.year, m.title))
