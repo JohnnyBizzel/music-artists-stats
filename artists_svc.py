@@ -2,6 +2,7 @@ import requests
 import collections
 import time
 import html
+import urllib3
 
 SearchResults = collections.namedtuple(
     'MovieResult',
@@ -52,7 +53,7 @@ def find_songs_by_artist(artist_id):
     offsetting = 0
     artist_songs = []
 
-    while (loops_needed >= 0):
+    while loops_needed >= 0:
         url = 'https://musicbrainz.org/ws/2/recording?query=arid:{}&fmt=json&limit=100&offset={}'.format(artist_id,
                                                                                                          offsetting)
         print('Getting data from web service...Loops left {}'.format(loops_needed+1))
@@ -95,20 +96,22 @@ def find_song(artist, song):
 
     url = 'https://api.lyrics.ovh/v1/{}/{}'.format(html.unescape(artist), html.unescape(song))
     print(url)
-    resp = requests.get(url)
-    resp.raise_for_status()
+    try:
+        resp = requests.get(url)
+        resp.raise_for_status()
 
-    artist_data = resp.json()
-    artists_list = artist_data.get('lyrics')
+        artist_data = resp.json()
+        artists_list = artist_data.get('lyrics')
 
-    lyric_words = artists_list.split()
+        lyric_words = artists_list.split()
 
-    for md in lyric_words:
-        print(md+" ", end="")
+        for md in lyric_words:
+            print(md+" ", end="")
 
-    word_length = len(artists_list.split());
-    word_count_text = "\nNumber of words in song = {}".format(word_length);
+        word_length = len(artists_list.split())
+        word_count_text = "\nNumber of words in song = {}".format(word_length)
+        return word_count_text
+    except urllib3.exceptions.HTTPError as ex:
+        print('Hmm...' + ex)
+        # lyrics not found
 
-    # artists.sort(key=lambda m: -m.year)  # minus sorts descending
-
-    return word_count_text
