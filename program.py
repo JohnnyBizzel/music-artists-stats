@@ -23,9 +23,8 @@ def search_event_loop():
             if search != 'x':
                 artist_id = artists_svc.find_artist(search)
                 songs = artists_svc.find_songs_by_artist(artist_id)
-                print("Found {} songs when searching for '{}'".format(songs, search))
-		
-                #for m in results:
+                print("Found {} songs when searching for '{}'".format(len(songs), search))
+                # for m in results:
                 #    print("{} -- {}".format(m.year, m.title))
                 # TODO artists_svc.find_song(artist, search)
         except ValueError:
@@ -33,7 +32,8 @@ def search_event_loop():
         except ConnectionError as ce:
             print('Failed to connect to API')
         except Exception as ex:
-            print('Error: {}'.format(ex))
+            text = sys.exc_info()
+            print('Error: {}'.format(text))
 
     print('>>> exiting')
 
