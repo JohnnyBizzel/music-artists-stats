@@ -1,6 +1,6 @@
 import artists_svc
 import requests.exceptions
-
+import sys
 
 def main():
     print_header()
@@ -21,12 +21,16 @@ def search_event_loop():
         try:
             search = input('Search term (enter x to eXit):')
             if search != 'x':
-                artist_id = artists_svc.find_artist(search)
-                songs = artists_svc.find_songs_by_artist(artist_id)
-                print("Found {} songs when searching for '{}'".format(len(songs), search))
-                # for m in results:
-                #    print("{} -- {}".format(m.year, m.title))
-                # TODO artists_svc.find_song(artist, search)
+                artist_d = artists_svc.find_artist(search)
+                print(artist_d)
+                artist_name = list(artist_d.keys())[0]
+                songs = artists_svc.find_songs_by_artist(artist_d[artist_name])
+                print("Found {} songs when searching for '{}'".format(len(songs), artist_name))
+                first = artists_svc.find_song(artist_name, songs[0])
+                print(first)
+                # for s in songs:
+                #   print("{} -- {}".format(m.year, m.title))
+                #   artists_svc.find_song(artist_name, search)
         except ValueError:
             print('Search term is missing or invalid')
         except ConnectionError as ce:
