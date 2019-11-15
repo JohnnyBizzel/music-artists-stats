@@ -28,6 +28,8 @@ def search_event_loop():
                 print("Found {} songs when searching for '{}'".format(len(songs), artist_name))
                 first = artists_svc.find_song(artist_name, songs[0])
                 print(first)
+                second = artists_svc.find_song(artist_name, songs[1])
+                print(second)
                 # for s in songs:
                 #   print("{} -- {}".format(m.year, m.title))
                 #   artists_svc.find_song(artist_name, search)

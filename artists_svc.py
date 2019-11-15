@@ -111,7 +111,10 @@ def find_song(artist, song):
         word_length = len(artists_list.split())
         word_count_text = "\nNumber of words in song = {}".format(word_length)
         return word_count_text
+    # somehow handle requests.exceptions.HTTPError
+    except requests.exceptions.HTTPError as e:
+        print('Hmm...' + e.response.text)
+        # lyrics not found
     except urllib3.exceptions.HTTPError as ex:
         print('Hmm...' + ex)
         # lyrics not found
-
