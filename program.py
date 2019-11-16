@@ -26,13 +26,14 @@ def search_event_loop():
                 artist_name = list(artist_d.keys())[0]
                 songs = artists_svc.find_songs_by_artist(artist_d[artist_name])
                 print("Found {} songs when searching for '{}'".format(len(songs), artist_name))
-                first = artists_svc.find_song(artist_name, songs[0])
-                print(first)
-                second = artists_svc.find_song(artist_name, songs[1])
-                print(second)
-                # for s in songs:
-                #   print("{} -- {}".format(m.year, m.title))
-                #   artists_svc.find_song(artist_name, search)
+                words_in_song = []
+                for s in songs:
+                    print("\nANALYSING SONG -- {}".format(s))
+                    words = artists_svc.find_song(artist_name, s)
+                    if words is not None and words > 0:
+                        words_in_song.append(words)
+                print("\nNum words list {}".format(words_in_song))
+                print(sum(words_in_song) / len(words_in_song))
         except ValueError:
             print('Search term is missing or invalid')
         except ConnectionError as ce:
@@ -42,6 +43,10 @@ def search_event_loop():
             print('Error: {}'.format(text))
 
     print('>>> exiting')
+
+
+def mean(lst):
+    return sum(lst) / len(lst) 
 
 
 if __name__ == '__main__':
