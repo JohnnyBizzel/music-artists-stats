@@ -2,6 +2,7 @@ import artists_svc
 import requests.exceptions
 import sys
 
+
 def main():
     print_header()
     search_event_loop()
@@ -30,8 +31,8 @@ def search_event_loop():
                 for s in songs:
                     print("\nANALYSING SONG -- {}".format(s))
                     words = artists_svc.find_song(artist_name, s)
-                    if words is not None and words > 0:
-                        words_in_song.append(words)
+                    if words is not None and words["count"] is not None and words["count"] > 0:
+                        words_in_song.append(words["count"])
                 print("\nNum words list {}".format(words_in_song))
                 print(sum(words_in_song) / len(words_in_song))
         except ValueError:

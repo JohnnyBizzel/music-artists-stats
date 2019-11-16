@@ -101,17 +101,22 @@ def find_song(artist, song):
         resp.raise_for_status()
 
         artist_data = resp.json()
-        artists_list = artist_data.get('lyrics')
+        lyric_words = artist_data.get('lyrics')
 
-        lyric_words = artists_list.split()
+        lyric_words_list = lyric_words.split()
 
-        for md in lyric_words:
-            print(md+" ", end="")
+        # Show lyrics to user
+        for wd in lyric_words_list:
+            print(wd + " ", end="")
 
-        word_length = len(artists_list.split())
+        word_length = len(lyric_words.split())
         print("\nNumber of words in song = {}".format(word_length))
-        return word_length
-    # somehow handle requests.exceptions.HTTPError
+        lyrics_and_count = {
+            "lyrics": lyric_words,
+            "count": word_length
+        }
+        return lyrics_and_count
+    # handle and ignore HTTPErrors (where song not found)
     except requests.exceptions.HTTPError as e:
         print('Request Error:: ' + e.response.text)
         pass
