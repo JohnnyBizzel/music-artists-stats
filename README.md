@@ -34,8 +34,11 @@ If not already installed, install from [Python.org](https://www.python.org/)
 Download *this code* - the green button "Clone or Download Zip"
 Go to location where you extracted the zip file.
 
-To run the code:
+To run the code on Windows:
 **py program.py**
+
+To run the code on Linux:
+**python3 program.py**
 
 When running the program, you will be prompted for an artist's name.
 Enter a name and if found, the code will run and retrieve the songs and lyrics for that artist.
