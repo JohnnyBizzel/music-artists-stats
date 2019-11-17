@@ -19,6 +19,7 @@ Install pip - Python's package installer:
 **py -m pip install -U pip**
 
 Find the location where pip is installed. For me this was in my AppData\Local\Programs\Python\Python38-32\Scripts folder.
+
 Install *requests* package:
 **pip3 install requests**
 
