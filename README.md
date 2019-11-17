@@ -8,7 +8,9 @@ To install:
 ### Install the latest stable version of Python. Version 3.8 is the latest at time of writing.
 Install from [Python.org](https://www.python.org/)
 
-Go to a command prompt. The quickest way is to press Windows Key+R. Open type "cmd" & press ENTER.
+Go to a command prompt. The quickest way is to press Windows Key+R. 
+At the Open prompt type **cmd** & press ENTER.
+Note if this doesn't work you might have to run **cmd** as Administrator.
 
 To check Python is installed:
 **py**
