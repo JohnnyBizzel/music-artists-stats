@@ -102,8 +102,12 @@ def find_song(artist, song):
 
         artist_data = resp.json()
         lyric_words = artist_data.get('lyrics')
-
         lyric_words_list = lyric_words.split()
+        if len(lyric_words_list) == 0:
+            return
+        if len(lyric_words_list) > 0 and lyric_words_list[0].startswith("Instrumental"):
+            print("------------------ignoring INSTRUMENTAL version -------------------------- ")
+            return
 
         # Show lyrics to user
         for wd in lyric_words_list:
