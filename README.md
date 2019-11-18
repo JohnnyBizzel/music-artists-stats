@@ -1,6 +1,6 @@
 # Music Artists Statistics
 
-An app in Python showing basic statistics about an artist's song lyrics.
+An app in Python showing the average length of an artist's song lyrics.
 
 To install:
 
