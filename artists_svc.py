@@ -24,7 +24,7 @@ def find_artist(search_keyword):
         index += 1
 
     selected = input("Type the number of the artist you would like to search for (anything else to try again):")
-    if int(selected) not in range(1, 10):
+    if int(selected) not in range(1, index):
         return "x"
     # artists.sort(key=lambda m: -m.year)  # minus sorts descending
     # artist and id return in a dictionary
@@ -98,7 +98,7 @@ def find_song(artist, song):
         raise ValueError("Artist name or song was not provided.")
 
     url = 'https://api.lyrics.ovh/v1/{}/{}'.format(html.unescape(artist), html.unescape(song))
-    print(url)
+    # print(url)
     try:
         resp = requests.get(url)
         resp.raise_for_status()
@@ -125,7 +125,8 @@ def find_song(artist, song):
         return lyrics_and_count
     # handle and ignore HTTPErrors (where song not found)
     except requests.exceptions.HTTPError as e:
-        print('Request Error:: ' + e.response.text)
+        # print('Request Error:: ' + e.response.text)
+        print('Sorry, the song lyrics for this song could not be found')
         pass
         # lyrics not found
     except urllib3.exceptions.HTTPError as ex:
