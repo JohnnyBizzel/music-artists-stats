@@ -23,7 +23,8 @@ def search_event_loop():
             search = input("Search for an artist (enter x to eXit):")
             if search != 'x':
                 artist_dict = artists_svc.find_artist(search)
-                print(artist_dict)
+                if artist_dict == "x":  # user did not choose an artist
+                    continue
                 artist_name = list(artist_dict.keys())[0]
                 songs = artists_svc.find_songs_by_artist(artist_dict[artist_name])
                 print("Found {} songs for '{}'".format(len(songs), artist_name))
@@ -36,8 +37,8 @@ def search_event_loop():
                         if words["lyrics"] is not None and words["lyrics"] not in lyrics_list:
                             lyrics_list.append(words["lyrics"])
                             words_in_song.append(words["count"])
-                print("\nNum words list {}".format(words_in_song))
-                print(sum(words_in_song) / len(words_in_song))
+                print("\nNumber of song lyrics found {}".format(len(words_in_song)))
+                print("\nAverage words in a song {:.1f}".format(sum(words_in_song) / len(words_in_song)))
         except ValueError:
             print('Search term is missing or invalid')
         except ConnectionError as ce:

@@ -57,11 +57,14 @@ To run the code on Windows:
 
 **py program.py**
 
-To run the code on Linux:
+To run the code on Linux or Mac:
 
 **python3 program.py**
 
+## Running the program
+
 When running the program, you will be prompted for an artist's name.
 Enter a name and if found, the code will run and retrieve the songs and lyrics for that artist.
-Note you need an internet connection for this to work.
+This takes a while as it checks all the artist's releases.
+(Note: You need an internet connection for this to work as the code is retrieving data from other web sites).
 

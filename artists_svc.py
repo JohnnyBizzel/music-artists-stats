@@ -4,16 +4,12 @@ import time
 import html
 import urllib3
 
-SearchResults = collections.namedtuple(
-    'MovieResult',
-    'lyrics')
-
 
 def find_artist(search_keyword):
     if not search_keyword or not search_keyword.strip():
         raise ValueError("Search term required!")
 
-    url = 'https://musicbrainz.org/ws/2/artist/?query=artist:{}&limit=1&fmt=json'.format(search_keyword)
+    url = 'https://musicbrainz.org/ws/2/artist/?query=artist:{}&limit=10&fmt=json'.format(search_keyword)
 
     resp = requests.get(url)
     resp.raise_for_status()
@@ -21,11 +17,18 @@ def find_artist(search_keyword):
     artist_data = resp.json()
     artists_list = artist_data.get('artists')
 
-    print("{} {}".format(artists_list[0]["name"], artists_list[0]["id"]))
+    # Code returns 10 artists for the user to select from
+    index = 1
+    for a in artists_list:
+        print("{}. {}".format(index, a["name"]))
+        index += 1
 
+    selected = input("Type the number of the artist you would like to search for (anything else to try again):")
+    if int(selected) not in range(1, 10):
+        return "x"
     # artists.sort(key=lambda m: -m.year)  # minus sorts descending
     # artist and id return in a dictionary
-    artist_dict = { artists_list[0]["name"] : artists_list[0]["id"] }
+    artist_dict = {artists_list[int(selected)-1]["name"]: artists_list[int(selected)-1]["id"]}
 
     return artist_dict
 
@@ -73,8 +76,8 @@ def find_songs_by_artist(artist_id):
         if ('secondary-types' in releases and
                 ("Compilation" in releases["secondary-types"] or
                     "Remix" in releases["secondary-types"])):
-                        # Song on 'compilation' album so ignored
-                        continue
+            # Song on 'compilation' album so ignored
+            continue
         try:
             if 'primary-type' in releases and releases['primary-type'] == 'Single':
                 print('.',end="")
@@ -106,7 +109,7 @@ def find_song(artist, song):
         if len(lyric_words_list) == 0:
             return
         if len(lyric_words_list) > 0 and lyric_words_list[0].startswith("Instrumental"):
-            print("------------------ignoring INSTRUMENTAL version -------------------------- ")
+            print("------------------ignoring INSTRUMENTAL version --------------- ")
             return
 
         # Show lyrics to user
