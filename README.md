@@ -3,6 +3,7 @@
 An app in Python showing basic statistics about an artist's song lyrics.
 
 To install:
+
 ## On Windows
 
 ### Install the latest stable version of Python. Version 3.8 is the latest at time of writing.
@@ -13,19 +14,24 @@ At the Open prompt type **cmd** & press ENTER.
 Note if this doesn't work you might have to run **cmd** as Administrator.
 
 To check Python is installed:
+
 **py**
 
 Install pip - Python's package installer:
+
 **py -m pip install -U pip**
 
 Find the location where pip is installed. For me this was in my AppData\Local\Programs\Python\Python38-32\Scripts folder.
 
 Install *requests* package:
+
 **pip3 install requests**
 
-## On Linux
+
+## On Linux and Mac
 Check if Python 3.x is already installed.
 At command prompt.
+
 **python3**
 
 You should get a confirmation and >>> prompt.
@@ -33,14 +39,26 @@ You should get a confirmation and >>> prompt.
 
 If not already installed, install from [Python.org](https://www.python.org/)
 
+Note: On a Mac I got the problem that the 'requests' library was not installed.
+
+*You need an administrator access.*
+
+Install *requests* package:
+
+**pip3 install requests**
+
+
 ## On all operating systems:
+
 Download *this code* - the green button "Clone or Download Zip"
 Go to location where you extracted the zip file.
 
 To run the code on Windows:
+
 **py program.py**
 
 To run the code on Linux:
+
 **python3 program.py**
 
 When running the program, you will be prompted for an artist's name.
